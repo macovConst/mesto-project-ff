@@ -12,7 +12,7 @@ const deleteCard = (element, parent) => element.closest(parent).remove();
 let card = cardTemplate.querySelector('.places__item');
 
 // @todo: Функция создания карточки
-const createCard = (item) => {
+const createCard = (item, clickFunction) => {
   let newCard = card.cloneNode(true);
   let cardImage = newCard.querySelector('.card__image');
   let cardTitle = newCard.querySelector('.card__title');
@@ -21,12 +21,12 @@ const createCard = (item) => {
   cardImage.src = item.link;
   cardImage.alt = `Картинка с ${item.name}`;
   cardTitle.textContent = item.name;
-  cardButton.addEventListener('click', () => deleteCard(cardButton, '.card'));
+  cardButton.addEventListener('click', () => clickFunction(cardButton, '.card'));
 
   return newCard;
 }
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach((item) => {
-  placesList.append(createCard(item));
+  placesList.append(createCard(item, deleteCard));
 })
