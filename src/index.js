@@ -4,14 +4,17 @@ import { openModal, closeModal } from './components/modal.js';
 import './pages/index.css';
 
 
-const cardTemplate = document.querySelector('#card-template').content;
-export let card = cardTemplate.querySelector('.places__item');
+
 
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_new-card');
+const popupShow = document.querySelector('.popup_type_image');
+
+let popupImg = popupShow.querySelector('.popup__image');
+let popupText = popupShow.querySelector('.popup__caption');
 
 // @todo: Темплейт карточки
 const placesList = document.querySelector('.places__list');
@@ -19,27 +22,26 @@ const placesList = document.querySelector('.places__list');
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach((item) => {
-  placesList.append(createCard(item, deleteCard, likeCard, showCard));
+  placesList.append(createCard(
+    item,
+    deleteCard,
+    likeCard,
+    showCard,
+    popupShow,
+    popupText,
+    popupImg));
 });
 
 
-export const checkKey = (evt, popup) => {
-  if (evt.key === 'Escape') {
-    closeModal(popup);
-  };
-}
+
 // Слушатель Редактировать профиль
 buttonEdit.addEventListener('click', () => {
   openModal(popupEdit);
-  popupEdit.addEventListener('click', (evt) => closeModal(evt.target));
-  document.addEventListener('keydown', (evt) => checkKey(evt, popupEdit));
 });
 
 // Слушатель Добавить карточку
 buttonAdd.addEventListener('click', () => {
   openModal(popupAdd);
-  popupAdd.addEventListener('click', (evt) => closeModal(evt.target));
-  document.addEventListener('keydown', (evt) => checkKey(evt, popupAdd));
 });
 
 // Находим форму в DOM
@@ -59,29 +61,38 @@ const placeLinkInput = formElemenNewPlace.querySelector('.popup__input_type_url'
 function handleFormSubmitEdit(evt) {
   evt.preventDefault();
 
-  let name = nameInput.value;
-  let job = jobInput.value;
+  const name = nameInput.value;
+  const job = jobInput.value;
 
   profileTitle.textContent = name;
-  profileDescription.textContent = job;;
+  profileDescription.textContent = job;
   closeModal(evt.target);
 }
 
 // Обработчик «отправки» формы добавить изображение
 function handleFormSubmitNewPlace(evt) {
   evt.preventDefault();
-  let name = placeNameInput.value;
-  let link = placeLinkInput.value;
-  let card = {
+  const name = placeNameInput.value;
+  const link = placeLinkInput.value;
+  const card = {
     name: "" + name,
     link: "" + link,
   }
-  placesList.prepend(createCard(card, deleteCard, likeCard, showCard));
-  placeNameInput.value = null;
-  placeLinkInput.value = null;
+  placesList.prepend(createCard(
+    card,
+    deleteCard,
+    likeCard,
+    showCard,
+    popupShow,
+    popupText,
+    popupImg));
+  formElemenNewPlace.reset();
   closeModal(evt.target);
 }
 
 formElementEdit.addEventListener('submit', handleFormSubmitEdit);
 formElemenNewPlace.addEventListener('submit', handleFormSubmitNewPlace);
+popupAdd.addEventListener('click', (evt) => closeModal(evt.target));
+popupEdit.addEventListener('click', (evt) => closeModal(evt.target));
+popupShow.addEventListener('click', (evt) => closeModal(evt.target));
 

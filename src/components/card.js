@@ -1,19 +1,25 @@
-import { card } from "../";
-import { openModal, closeModal } from "./modal";
-import { checkKey, correntOpenPopup } from "../";
+import { openModal } from "./modal";
 
 
-
+const cardTemplate = document.querySelector('#card-template').content;
+const card = cardTemplate.querySelector('.places__item');
 
 // @todo: Функция создания карточки
-export const createCard = (item, clickDeletteFunction, clickLikeFunction, clickShowFunction) => {
-  let newCard = card.cloneNode(true);
-  let cardImage = newCard.querySelector('.card__image');
-  let cardTitle = newCard.querySelector('.card__title');
-  let cardDeletteButton = newCard.querySelector('.card__delete-button');
-  let cardLikeButton = newCard.querySelector('.card__like-button');
-  let cardShowButton = newCard.querySelector('.card__image');
-  let popupShow = document.querySelector('.popup_type_image');
+export const createCard = (
+  item,
+  clickDeletteFunction,
+  clickLikeFunction,
+  clickShowFunction,
+  popupShow,
+  popupText,
+  popupImg) => {
+
+  const newCard = card.cloneNode(true);
+  const cardImage = newCard.querySelector('.card__image');
+  const cardTitle = newCard.querySelector('.card__title');
+  const cardDeletteButton = newCard.querySelector('.card__delete-button');
+  const cardLikeButton = newCard.querySelector('.card__like-button');
+  const cardShowButton = newCard.querySelector('.card__image');
 
 
   cardImage.src = item.link;
@@ -21,7 +27,12 @@ export const createCard = (item, clickDeletteFunction, clickLikeFunction, clickS
   cardTitle.textContent = item.name;
   cardDeletteButton.addEventListener('click', () => clickDeletteFunction(cardDeletteButton, '.card'));
   cardLikeButton.addEventListener('click', () => clickLikeFunction(cardLikeButton));
-  cardShowButton.addEventListener('click', () => clickShowFunction(popupShow, cardImage.src, cardImage.alt));
+  cardShowButton.addEventListener('click', () => clickShowFunction(
+    popupShow,
+    cardImage.src,
+    cardImage.alt,
+    popupText,
+    popupImg));
   return newCard;
 }
 
@@ -30,14 +41,15 @@ export const deleteCard = (element, parent) => element.closest(parent).remove();
 // @todo: Лайк удаления карточки
 export const likeCard = (element) => element.classList.toggle('card__like-button_is-active');
 // @todo: Функция просмотра карточки
-export const showCard = (element, src, alt) => {
+export const showCard = (
+  element,
+  src,
+  alt,
+  popupText,
+  popupImg) => {
   openModal(element);
-  let popupImg = element.querySelector('.popup__image');
-  let popupText = element.querySelector('.popup__caption');
   popupImg.setAttribute('src', src);
   popupImg.setAttribute('alt', alt);
   popupText.textContent = alt;
-  element.addEventListener('click', (evt) => closeModal(evt.target));
-  document.addEventListener('keydown', (evt) => checkKey(evt, element));
 
 };

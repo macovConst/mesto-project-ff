@@ -1,32 +1,35 @@
 import {
-  checkKey,
   nameInput,
   jobInput,
   profileDescription,
   profileTitle,
 } from "../index.js";
 
+export const checkKey = (evt, popup) => {
+  if (evt.key === 'Escape') {
+    closeModal(popup);
+  };
+}
+
 export const openModal = (popup) => {
   popup.classList.add('popup_is-animated');
   setTimeout(() => popup.classList.add('popup_is-opened'), 100);
-  if (popup.classList.contains('popup_type_edit')) {
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileDescription.textContent;
-  };
-  if (popup.classList.contains('popup_type_new-card')) console.log('is new card');
-
-
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
+  document.addEventListener('keydown', (evt) => checkKey(evt, popup));
 }
 
-export const closeModal = (target) => {
+export const closeModal = (popup) => {
   if (
-    target.classList.contains('popup__close') ||
-    target.classList.contains('popup_is-opened') ||
-    target.classList.contains('popup__button')
+    popup.classList.contains('popup__close') ||
+    popup.classList.contains('popup_is-opened') ||
+    popup.classList.contains('popup__button')
   ) {
 
-    target.closest('.popup').classList.remove('popup_is-opened');
-    setTimeout(() => target.closest('.popup').classList.remove('popup_is-animated'), 1000);
+    popup.closest('.popup').classList.remove('popup_is-opened');
+    setTimeout(() => popup.closest('.popup').classList.remove('popup_is-animated'), 1000);
     document.removeEventListener('keydown', checkKey);
   };
 }
+
+
