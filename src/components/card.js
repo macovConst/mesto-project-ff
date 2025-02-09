@@ -1,6 +1,3 @@
-import { openModal } from "./modal";
-
-
 const cardTemplate = document.querySelector('#card-template').content;
 const card = cardTemplate.querySelector('.places__item');
 
@@ -12,7 +9,12 @@ export const createCard = (
   clickShowFunction,
   popupShow,
   popupText,
-  popupImg) => {
+  popupImg,
+  nameInput,
+  jobInput,
+  profileDescription,
+  profileTitle,
+  openModal,) => {
 
   const newCard = card.cloneNode(true);
   const cardImage = newCard.querySelector('.card__image');
@@ -32,7 +34,12 @@ export const createCard = (
     cardImage.src,
     cardImage.alt,
     popupText,
-    popupImg));
+    popupImg,
+    nameInput,
+    jobInput,
+    profileDescription,
+    profileTitle,
+    openModal,));
   return newCard;
 }
 
@@ -40,16 +47,3 @@ export const createCard = (
 export const deleteCard = (element, parent) => element.closest(parent).remove();
 // @todo: Лайк удаления карточки
 export const likeCard = (element) => element.classList.toggle('card__like-button_is-active');
-// @todo: Функция просмотра карточки
-export const showCard = (
-  element,
-  src,
-  alt,
-  popupText,
-  popupImg) => {
-  openModal(element);
-  popupImg.setAttribute('src', src);
-  popupImg.setAttribute('alt', alt);
-  popupText.textContent = alt;
-
-};

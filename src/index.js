@@ -1,5 +1,5 @@
 import { initialCards } from './scripts/cards.js';
-import { deleteCard, createCard, likeCard, showCard } from './components/card.js';
+import { deleteCard, createCard, likeCard } from './components/card.js';
 import { openModal, closeModal } from './components/modal.js';
 import './pages/index.css';
 
@@ -13,13 +13,42 @@ const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_new-card');
 const popupShow = document.querySelector('.popup_type_image');
 
-let popupImg = popupShow.querySelector('.popup__image');
-let popupText = popupShow.querySelector('.popup__caption');
+const popupImg = popupShow.querySelector('.popup__image');
+const popupText = popupShow.querySelector('.popup__caption');
+
+// Находим форму в DOM
+const formElementEdit = document.forms.edit_profile;
+const formElemenNewPlace = document.forms.new_place;
+
+// Находим поля формы в DOM
+const nameInput = formElementEdit.querySelector('.popup__input_type_name');
+const jobInput = formElementEdit.querySelector('.popup__input_type_description');
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
+const placeNameInput = formElemenNewPlace.querySelector('.popup__input_type_card-name');
+const placeLinkInput = formElemenNewPlace.querySelector('.popup__input_type_url');
 
 // @todo: Темплейт карточки
 const placesList = document.querySelector('.places__list');
 
+// @todo: Функция просмотра карточки
+const showCard = (
+  element,
+  src,
+  alt,
+  popupText,
+  popupImg,) => {
+  openModal(
+    element,
+    nameInput,
+    jobInput,
+    profileDescription,
+    profileTitle,);
+  popupImg.setAttribute('src', src);
+  popupImg.setAttribute('alt', alt);
+  popupText.textContent = alt;
 
+};
 // @todo: Вывести карточки на страницу
 initialCards.forEach((item) => {
   placesList.append(createCard(
@@ -29,33 +58,35 @@ initialCards.forEach((item) => {
     showCard,
     popupShow,
     popupText,
-    popupImg));
+    popupImg,
+    nameInput,
+    jobInput,
+    profileDescription,
+    profileTitle,
+    openModal,));
 });
-
 
 
 // Слушатель Редактировать профиль
 buttonEdit.addEventListener('click', () => {
-  openModal(popupEdit);
+  openModal(
+    popupEdit,
+    nameInput,
+    jobInput,
+    profileDescription,
+    profileTitle,);
 });
 
 // Слушатель Добавить карточку
 buttonAdd.addEventListener('click', () => {
-  openModal(popupAdd);
+  openModal(
+    popupAdd,
+    nameInput,
+    jobInput,
+    profileDescription,
+    profileTitle,
+  );
 });
-
-// Находим форму в DOM
-const formElementEdit = document.forms.edit_profile;
-const formElemenNewPlace = document.forms.new_place;
-
-// Находим поля формы в DOM
-export const nameInput = formElementEdit.querySelector('.popup__input_type_name');
-export const jobInput = formElementEdit.querySelector('.popup__input_type_description');
-export const profileTitle = document.querySelector('.profile__title');
-export const profileDescription = document.querySelector('.profile__description');
-const placeNameInput = formElemenNewPlace.querySelector('.popup__input_type_card-name');
-const placeLinkInput = formElemenNewPlace.querySelector('.popup__input_type_url');
-
 
 // Обработчик «отправки» формы редактировать пользователя
 function handleFormSubmitEdit(evt) {
@@ -85,7 +116,13 @@ function handleFormSubmitNewPlace(evt) {
     showCard,
     popupShow,
     popupText,
-    popupImg));
+    popupImg,
+    nameInput,
+    jobInput,
+    profileDescription,
+    profileTitle,
+    openModal,
+  ));
   formElemenNewPlace.reset();
   closeModal(evt.target);
 }
