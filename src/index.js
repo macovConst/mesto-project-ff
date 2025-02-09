@@ -1,6 +1,6 @@
 import { initialCards } from './scripts/cards.js';
 import { deleteCard, createCard, likeCard } from './components/card.js';
-import { openModal, closeModal } from './components/modal.js';
+import { openModal, closeModal, checkKey } from './components/modal.js';
 import './pages/index.css';
 
 
@@ -8,6 +8,8 @@ import './pages/index.css';
 
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
+const buttonsCloseModal = document.querySelectorAll('.popup__close');
+const overlay = document.querySelectorAll('.popup');
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_new-card');
@@ -69,6 +71,8 @@ initialCards.forEach((item) => {
 
 // Слушатель Редактировать профиль
 buttonEdit.addEventListener('click', () => {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
   openModal(
     popupEdit,
     nameInput,
@@ -129,7 +133,12 @@ function handleFormSubmitNewPlace(evt) {
 
 formElementEdit.addEventListener('submit', handleFormSubmitEdit);
 formElemenNewPlace.addEventListener('submit', handleFormSubmitNewPlace);
-popupAdd.addEventListener('click', (evt) => closeModal(evt.target));
-popupEdit.addEventListener('click', (evt) => closeModal(evt.target));
-popupShow.addEventListener('click', (evt) => closeModal(evt.target));
+
+overlay.forEach((button) => {
+  button.addEventListener('click', (evt) => { if (evt.target === button) closeModal(evt.target) });
+});
+
+buttonsCloseModal.forEach((button) => {
+  button.addEventListener('click', (evt) => closeModal(evt.target));
+});
 
