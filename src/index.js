@@ -1,6 +1,6 @@
 import { initialCards } from './scripts/cards.js';
 import { deleteCard, createCard, likeCard } from './components/card.js';
-import { openModal, closeModal, checkKey } from './components/modal.js';
+import { openModal, closeModal } from './components/modal.js';
 import './pages/index.css';
 
 
@@ -9,7 +9,7 @@ import './pages/index.css';
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
 const buttonsCloseModal = document.querySelectorAll('.popup__close');
-const overlay = document.querySelectorAll('.popup');
+const overlayList = document.querySelectorAll('.popup');
 
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupAdd = document.querySelector('.popup_type_new-card');
@@ -34,18 +34,8 @@ const placeLinkInput = formElemenNewPlace.querySelector('.popup__input_type_url'
 const placesList = document.querySelector('.places__list');
 
 // @todo: Функция просмотра карточки
-const showCard = (
-  element,
-  src,
-  alt,
-  popupText,
-  popupImg,) => {
-  openModal(
-    element,
-    nameInput,
-    jobInput,
-    profileDescription,
-    profileTitle,);
+const showCard = (src, alt) => {
+  openModal(popupShow);
   popupImg.setAttribute('src', src);
   popupImg.setAttribute('alt', alt);
   popupText.textContent = alt;
@@ -58,14 +48,7 @@ initialCards.forEach((item) => {
     deleteCard,
     likeCard,
     showCard,
-    popupShow,
-    popupText,
-    popupImg,
-    nameInput,
-    jobInput,
-    profileDescription,
-    profileTitle,
-    openModal,));
+  ));
 });
 
 
@@ -73,23 +56,12 @@ initialCards.forEach((item) => {
 buttonEdit.addEventListener('click', () => {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
-  openModal(
-    popupEdit,
-    nameInput,
-    jobInput,
-    profileDescription,
-    profileTitle,);
+  openModal(popupEdit);
 });
 
 // Слушатель Добавить карточку
 buttonAdd.addEventListener('click', () => {
-  openModal(
-    popupAdd,
-    nameInput,
-    jobInput,
-    profileDescription,
-    profileTitle,
-  );
+  openModal(popupAdd);
 });
 
 // Обработчик «отправки» формы редактировать пользователя
@@ -118,14 +90,6 @@ function handleFormSubmitNewPlace(evt) {
     deleteCard,
     likeCard,
     showCard,
-    popupShow,
-    popupText,
-    popupImg,
-    nameInput,
-    jobInput,
-    profileDescription,
-    profileTitle,
-    openModal,
   ));
   formElemenNewPlace.reset();
   closeModal(evt.target);
@@ -134,7 +98,7 @@ function handleFormSubmitNewPlace(evt) {
 formElementEdit.addEventListener('submit', handleFormSubmitEdit);
 formElemenNewPlace.addEventListener('submit', handleFormSubmitNewPlace);
 
-overlay.forEach((button) => {
+overlayList.forEach((button) => {
   button.addEventListener('click', (evt) => { if (evt.target === button) closeModal(evt.target) });
 });
 

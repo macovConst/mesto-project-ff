@@ -7,14 +7,7 @@ export const createCard = (
   clickDeletteFunction,
   clickLikeFunction,
   clickShowFunction,
-  popupShow,
-  popupText,
-  popupImg,
-  nameInput,
-  jobInput,
-  profileDescription,
-  profileTitle,
-  openModal,) => {
+) => {
 
   const newCard = card.cloneNode(true);
   const cardImage = newCard.querySelector('.card__image');
@@ -29,17 +22,7 @@ export const createCard = (
   cardTitle.textContent = item.name;
   cardDeletteButton.addEventListener('click', () => clickDeletteFunction(cardDeletteButton, '.card'));
   cardLikeButton.addEventListener('click', () => clickLikeFunction(cardLikeButton));
-  cardShowButton.addEventListener('click', () => clickShowFunction(
-    popupShow,
-    cardImage.src,
-    cardImage.alt,
-    popupText,
-    popupImg,
-    nameInput,
-    jobInput,
-    profileDescription,
-    profileTitle,
-    openModal,));
+  cardShowButton.addEventListener('click', () => clickShowFunction(cardImage.src, cardImage.alt));
   return newCard;
 }
 
