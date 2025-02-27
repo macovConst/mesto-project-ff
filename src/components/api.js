@@ -17,14 +17,14 @@ export const getInfoUser = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }
 
 export const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }
 
 export const editUserProfile = (newName, newAbout) => {
@@ -36,7 +36,7 @@ export const editUserProfile = (newName, newAbout) => {
       about: newAbout
     })
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }
 
 export const addNewCard = (newCardName, newCardLink) => {
@@ -48,7 +48,7 @@ export const addNewCard = (newCardName, newCardLink) => {
       link: newCardLink
     })
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }
 
 export const deleteCardFromServer = (cardId) => {
@@ -56,7 +56,7 @@ export const deleteCardFromServer = (cardId) => {
     method: 'DELETE',
     headers: config.headers,
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }
 
 export const like = (cardId) => {
@@ -64,7 +64,7 @@ export const like = (cardId) => {
     method: 'PUT',
     headers: config.headers,
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }
 
 export const dislike = (cardId) => {
@@ -72,7 +72,7 @@ export const dislike = (cardId) => {
     method: 'DELETE',
     headers: config.headers,
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }
 
 export const changeAvatar = (urlNewAvatar) => {
@@ -83,5 +83,5 @@ export const changeAvatar = (urlNewAvatar) => {
       avatar: urlNewAvatar,
     })
   })
-    .then((res) => checkRes(res));
+    .then(checkRes);
 }

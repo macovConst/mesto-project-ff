@@ -79,11 +79,14 @@ function handleFormSubmitEdit(evt) {
   const buttonSave = evt.target.querySelector('.popup__button');
   saveLoading(buttonSave, true);
   editUserProfile(name, job)
-    .then(() => closeModal(evt.target))
+    .then(() => {
+      closeModal(evt.target);
+      profileTitle.textContent = name;
+      profileDescription.textContent = job;
+    })
     .catch((err) => { console.log(err) })
     .finally(() => saveLoading(buttonSave, false));
-  profileTitle.textContent = name;
-  profileDescription.textContent = job;
+
 }
 
 // Обработчик «отправки» формы добавить изображение
