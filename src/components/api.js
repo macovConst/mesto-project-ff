@@ -1,31 +1,3 @@
-// Токен: 43917973-2feb-4cdf-bfd1-0dbc7bf82d22
-// Идентификатор группы: wff-cohort-31
-
-// return fetch('https://nomoreparties.co/v1/wff-cohort-31/cards', {
-//   headers: {
-//     authorization: '43917973-2feb-4cdf-bfd1-0dbc7bf82d22'
-//   }
-// })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   }); 
-
-// export const getInitialCards = () => {
-//   return fetch(`${config.baseUrl}/cards`, {
-//     headers: config.headers
-//   })
-//     .then(res => {
-//       if (res.ok) {
-//         return res.json();
-//       }
-//       return Promise.reject(`Ошибка: ${res.status}`);
-//     })
-//     .catch((err) => {
-//       console.log(err); // выводим ошибку в консоль
-//     })
-// } 
-
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-31',
   headers: {
@@ -34,28 +6,25 @@ const config = {
   }
 }
 
+function checkRes(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(res.status);
+}
+
 export const getInfoUser = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
 
 export const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
 
 export const editUserProfile = (newName, newAbout) => {
@@ -67,12 +36,7 @@ export const editUserProfile = (newName, newAbout) => {
       about: newAbout
     })
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
 
 export const addNewCard = (newCardName, newCardLink) => {
@@ -84,12 +48,7 @@ export const addNewCard = (newCardName, newCardLink) => {
       link: newCardLink
     })
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
 
 export const deleteCardFromServer = (cardId) => {
@@ -97,12 +56,7 @@ export const deleteCardFromServer = (cardId) => {
     method: 'DELETE',
     headers: config.headers,
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
 
 export const like = (cardId) => {
@@ -110,12 +64,7 @@ export const like = (cardId) => {
     method: 'PUT',
     headers: config.headers,
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
 
 export const dislike = (cardId) => {
@@ -123,12 +72,7 @@ export const dislike = (cardId) => {
     method: 'DELETE',
     headers: config.headers,
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
 
 export const changeAvatar = (urlNewAvatar) => {
@@ -139,10 +83,5 @@ export const changeAvatar = (urlNewAvatar) => {
       avatar: urlNewAvatar,
     })
   })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(res.status);
-    });
+    .then((res) => checkRes(res));
 }
